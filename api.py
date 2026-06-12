@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import numpy as np
 import tensorflow as tf
@@ -6,6 +7,13 @@ from sklearn.preprocessing import StandardScaler
 import joblib
 
 app = FastAPI(title="Meme Kanseri Tahmin API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Modeli ve scaler'ı yükle
 model = tf.keras.models.load_model("outputs/ann_model.keras")
